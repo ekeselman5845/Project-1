@@ -54,10 +54,10 @@ public class OperatorTokenRecognition {
             case "-": return "Subtraction";
             case "*": return "Multiplication";
             case "/": return "Division";
-            case "^": return "Exponentiation";
+            case "^": return "Exponent";
             case "(": return "Left Parenthesis";
             case ")": return "Right Parenthesis";
-            default: return "Unknown Operator";
+            default: return "Unknown";
         }
 }
 }
