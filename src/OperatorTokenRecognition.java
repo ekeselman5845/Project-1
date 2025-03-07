@@ -27,7 +27,15 @@ public class OperatorTokenRecognition {
             }
             // Check if the token is a number
             else if (isNumber(token)) {
-                System.out.println("Number: " + token);
+                int decimal = NumberConvert.toDecimal(token);
+                String binary = NumberConvert.toBinary(decimal);
+                String octal = NumberConvert.toOctal(decimal);
+                String hex = NumberConvert.toHex(decimal);
+                System.out.print("Number: " + token);
+                System.out.print("    Decimal: " + decimal);
+                System.out.print("    Binary: " + binary);
+                System.out.print("    Octal: " + octal);
+                System.out.println("    Hexadecimal: " + hex);
             }
             else {
                 System.out.println("Invalid Token: " + token);
@@ -46,8 +54,12 @@ public class OperatorTokenRecognition {
 
     // Helper method to check if the token is a valid number
     public static boolean isNumber(String token) {
-        return token.matches("-?\\d+"); // Matches optional '-' and digits (integer numbers only)
+        return  token.matches("-?0b[01]+") ||  // Binary
+                token.matches("-?0o[0-7]+") || // Octal
+                token.matches("-?0x[0-9A-Fa-f]+") || // Hexadecimal
+                token.matches("-?\\d+"); // Decimal
     }
+
     public static String getOperatorType(String token) {
         switch (token) {
             case "+": return "Addition";
