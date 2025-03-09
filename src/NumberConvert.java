@@ -1,3 +1,5 @@
+// Liz File: Approach 1
+
 public class NumberConvert {
 
     public static int toDecimal(String number) {
