@@ -94,3 +94,15 @@ public class InfixToPostfixConverter {
     }
 }
 
+// Note to run the level 3 files. 
+// to Level 3 compile: javac InfixToPostfixConverter.java
+// to create the JAR file with the Level 3 manifest: MANIFEST.MF files created, 
+// since we already have same name file so I named it MANIFEST_Level3.MF
+// Create the JAR using MANIFEST_Level3.MF , used following commands
+// jar cmf MANIFEST_Level3.MF InfixToPostfixConverter.jar InfixToPostfixConverter.class
+// After creating JAR, Run the JAR file: java -jar InfixToPostfixConverter.jar
+
+// Since we have created all the files, so just test run them using following.
+// javac InfixToPostfixConverter.java
+// java InfixToPostfixConverter
+// java -jar InfixToPostfixConverter.jar
