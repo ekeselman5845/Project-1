@@ -35,9 +35,8 @@ public class OperatorTokenRecognition {
                 System.out.print("    Decimal: " + decimal);
                 System.out.print("    Binary: " + binary);
                 System.out.print("    Octal: " + octal);
-                System.out.println("    Hexadecimal: " + hex);
-            }
-            else {
+                System.out.println("    Hexadecimal: " + hex);}
+            else{
                 System.out.println("Invalid Token: " + token);
             }
             
