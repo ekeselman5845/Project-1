@@ -42,44 +42,57 @@ public class InfixToPostfixConverter {
     }
 
     // to convert infix expression to postfix
-    private static String infixToPostfix(String infix) {
+    public static String infixToPostfix(String infix) {
         Deque<String> stack = new ArrayDeque<>();
         StringBuilder postfix = new StringBuilder();
-        
-        String[] tokens = infix.split("\\s+");
-        
-        for (String token : tokens) {
-            if (isNumber(token)) {
-                // If token is a number, add to the output
-                postfix.append(token).append(" ");
-            } else if (token.equals("(")) {
-                // If token is left parenthesis, push onto stack
-                stack.push(token);
-            } else if (token.equals(")")) {
-                // If token is right parenthesis, pop from stack until left parenthesis
-                while (!stack.isEmpty() && !stack.peek().equals("(")) {
-                    postfix.append(stack.pop()).append(" ");
+        StringBuilder currentToken = new StringBuilder();
+    
+        for (int i = 0; i < infix.length(); i++) {
+            char c = infix.charAt(i);
+    
+            if (Character.isDigit(c)) {
+                currentToken.append(c);
+            } else {
+                if (currentToken.length() > 0) {
+                    postfix.append(currentToken).append(" ");
+                    currentToken.setLength(0); //Reset
                 }
-                stack.pop(); // This will help to discard the left parenthesis
-            } else if (isOperator(token)) {
-                // If token is an operator
-                while (!stack.isEmpty() && precedence.get(stack.peek()) >= precedence.get(token)) {
-                    postfix.append(stack.pop()).append(" ");
+                if (c == ' ') {
+                    continue; //Skip spaces
+                }    
+                if (c == '(') {
+                    stack.push(String.valueOf(c));
+                } else if (c == ')') {
+                    while (!stack.isEmpty() && !stack.peek().equals("(")) {
+                        postfix.append(stack.pop()).append(" ");
+                    }
+                    stack.pop(); //Remove '(' from stack
+                } else if (isOperator(String.valueOf(c))) {
+                    //Handle negatives
+                    if ((c == '-' || c == '+') && (i == 0 || infix.charAt(i - 1) == '(')) {
+                        currentToken.append(c);
+                        continue;
+                    }
+    
+                    while (!stack.isEmpty() && precedence.get(stack.peek()) >= precedence.get(String.valueOf(c))) {
+                        postfix.append(stack.pop()).append(" ");
+                    }
+                    stack.push(String.valueOf(c));
                 }
-                stack.push(token);
             }
         }
-
-        // POP all the operators left in the stack
-        while (!stack.isEmpty()) {
+        if (currentToken.length() > 0) { //append remaining #s
+            postfix.append(currentToken).append(" ");
+        }   
+        while (!stack.isEmpty()) { //pop remaining operators
             postfix.append(stack.pop()).append(" ");
         }
-
-        return postfix.toString().trim(); // Return the postfix expression
+    
+        return postfix.toString().trim();
     }
 
     // to check if the token is a number
-    private static boolean isNumber(String token) {
+    public static boolean isNumber(String token) {
         try {
             Integer.parseInt(token); // try to parse as an integer
             return true;
@@ -89,7 +102,7 @@ public class InfixToPostfixConverter {
     }
 
     // to check if the token is an operator
-    private static boolean isOperator(String token) {
+    public static boolean isOperator(String token) {
         return precedence.containsKey(token);
     }
 }
