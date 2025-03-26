@@ -1,8 +1,29 @@
 // This is the testing file for the level 2 NumberConvert.java
 
 import java.util.Scanner;
-
+/**
+ * The {@code NumberConvertTestLevel2} class serves as a test program for the {@link NumberConvert} class.
+ * It allows users to input a number in various formats (binary, octal, hexadecimal, or decimal)
+ * and converts it into equivalent representations in other bases.
+ *
+ * @author Arjina and Elizabeth
+ * @version 1.0
+ */
 public class NumberConvertTestLevel2 {
+
+    /**
+    * Default constructor just to avoid javadoc warning. 
+    */
+    public NumberConvertTestLevel2() {
+    // Default constructor does not need additional setup.
+    }
+
+    /**
+     * The main method serves as the entry point of the program.
+     * It prompts the user to enter a number, converts it into different bases, and prints the results.
+     *
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -24,3 +45,4 @@ public class NumberConvertTestLevel2 {
 }
 
 // to create jar file: jar cfe NumberConvertTestLevel2.jar NumberConvertTestLevel2 *.class
+// to run the javadoc file: javadoc -d doc NumberConvertTestLevel2.java

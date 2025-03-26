@@ -11,11 +11,23 @@ https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Stack.htm
 then displays a string in postfix notation. 
 */
 
+ import java.util.*;
 
-import java.util.*;
+/**
+ * InfixToPostfixConverter converts mathematical infix expressions to postfix notation.
+ * It utilizes a stack to handle operator precedence and parentheses.
+ * The program reads an infix expression from the user, converts it, and prints the postfix expression.
+ */
 
 public class InfixToPostfixConverter {
-    // to define operator precedence
+    /**
+     * A map that defines the precedence of operators.
+     * The higher the number, the higher the precedence of the operator.
+     * 
+     * Citation: 
+     * https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html
+     * https://en.wikipedia.org/wiki/Shunting_yard_algorithm
+     */
     private static final Map<String, Integer> precedence = Map.of(
         "^", 4,
         "*", 3,
@@ -26,6 +38,12 @@ public class InfixToPostfixConverter {
         ")", 1
     );
 
+    /**
+     * Main method to run the program.
+     * It accepts user input as an infix expression, and prints the corresponding postfix expression.
+     *
+     * @param args Command line arguments (not used in this program)
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter an infix expression: ");
@@ -41,15 +59,27 @@ public class InfixToPostfixConverter {
         scanner.close();
     }
 
-    // to convert infix expression to postfix
+    /**
+     * To converts an infix expression to postfix.
+     * 
+     * This method reads through the infix expression, handles parentheses and operators,
+     * and uses a stack to ensure that the operators appear in the correct order in the resulting
+     * postfix expression. The method also considers operator precedence and handles different operator
+     * types such as addition, subtraction, multiplication, and so on.
+     *
+     * @param infix The infix expression as a string (e.g., "3 + 5 * (2 - 8)").
+     * @return The postfix expression as a string (e.g., "3 5 2 8 - * +").
+     */
     public static String infixToPostfix(String infix) {
-        Deque<String> stack = new ArrayDeque<>();
-        StringBuilder postfix = new StringBuilder();
-        StringBuilder currentToken = new StringBuilder();
+        Deque<String> stack = new ArrayDeque<>(); // Stack to store operators and parentheses
+        StringBuilder postfix = new StringBuilder(); // StringBuilder for the postfix result
+        StringBuilder currentToken = new StringBuilder(); // StringBuilder to handle digits in the expression
     
+        // Loop through each character in the infix expression
         for (int i = 0; i < infix.length(); i++) {
             char c = infix.charAt(i);
     
+             // If the character is a digit, build the current number token
             if (Character.isDigit(c)) {
                 currentToken.append(c);
             } else {
@@ -81,17 +111,25 @@ public class InfixToPostfixConverter {
                 }
             }
         }
-        if (currentToken.length() > 0) { //append remaining #s
+        // to append any remaining number token to the postfix expression
+        if (currentToken.length() > 0) { 
             postfix.append(currentToken).append(" ");
         }   
-        while (!stack.isEmpty()) { //pop remaining operators
+        // to pop all remaining operators from the stack
+        while (!stack.isEmpty()) { 
             postfix.append(stack.pop()).append(" ");
         }
     
         return postfix.toString().trim();
     }
 
-    // to check if the token is a number
+     /**
+     * To check if the token is a valid number
+     * This is used to differentiate between numbers and operators in the expression.
+     * 
+     * @param token The string token to check.
+     * @return True if the token is a valid number, otherwise false.
+     */
     public static boolean isNumber(String token) {
         try {
             Integer.parseInt(token); // try to parse as an integer
@@ -101,7 +139,13 @@ public class InfixToPostfixConverter {
         }
     }
 
-    // to check if the token is an operator
+    /**
+     * To checks if a string token is a valid operator.
+     * An operator is one of the symbols defined in the precedence map.
+     *
+     * @param token The string token to check.
+     * @return True if the token is a valid operator, otherwise false.
+     */
     public static boolean isOperator(String token) {
         return precedence.containsKey(token);
     }
@@ -119,3 +163,5 @@ public class InfixToPostfixConverter {
 // javac InfixToPostfixConverter.java
 // java InfixToPostfixConverter
 // java -jar InfixToPostfixConverter.jar
+// To run the javadoc file: javadoc -d doc InfixToPostfixConverter.java
+
