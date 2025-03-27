@@ -131,3 +131,5 @@ public class MyStackLevel5<T> implements Stack<T> {
         return sb.toString().trim();
     }
 }
+
+// to run javadoc: javadoc -d doc MyStackLevel5.java 
